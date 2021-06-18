@@ -1,18 +1,26 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import pandas as pd
+import xlrd
 
 
 def create_graph():
     G = nx.Graph()
     nodes = ["Mario", "Luigi", "Donkey Kong", "Diddy Kong", "Peach", "Daisy", "Yoshi", "Baby Mario", "Baby Luigi",
              "Bowser", "Wario", "Waluigi", "Koopa", "Toad", "Boo", "Toadette", "Shyguy", "Birdo", "Monty Mole",
-             "Bowser Jr", "Paratroopa", "Pianta", "Noki", "Hammer Bros", "Toadsworth", "Kamek", "King Boo",
+             "Bowser Jr", "Paratroopa", "Pianta", "Noki", "Hammer Bro", "Toadsworth", "Kamek", "King Boo",
              "Dixie Kong", "Petey Piranha", "Goomba", "Paragoomba", "Dry Bones"]
+    FILE_PATH = "database.xls"
+    x1 = pd.ExcelFile(FILE_PATH)
+    df = x1.parse("Sheet1")
     G.add_nodes_from(nodes)
     for i in range(0, len(nodes)):
         for j in range(0, len(nodes)):
-            if nodes[i] != nodes[j]:
-                G.add_edge(nodes[i], nodes[j])
+            if i != 0:
+                break
+            if j != 0:
+                print(df[nodes[j]].values[i])
+                G.add_edge(nodes[i], nodes[j], weight=df[nodes[j]].values[i])
     return G
 
 
@@ -26,6 +34,7 @@ def main():
             verticalalignment='baseline',
             edge_color='grey')
     plt.show()
+    print(f"WEIGHT from Mario to Bowser is: {graph['Mario']['Bowser']['weight']}")
 
 
 if __name__ == '__main__':
