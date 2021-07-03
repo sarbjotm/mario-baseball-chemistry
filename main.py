@@ -16,11 +16,8 @@ def create_graph():
     G.add_nodes_from(nodes)
     for i in range(0, len(nodes)):
         for j in range(0, len(nodes)):
-            if i != 0:
-                break
-            if j != 0:
-                print(df[nodes[j]].values[i])
-                G.add_edge(nodes[i], nodes[j], weight=df[nodes[j]].values[i])
+            #If not connected then add_edge
+            G.add_edge(nodes[i], nodes[j], weight=df[nodes[j]].values[i])
     return G
 
 
